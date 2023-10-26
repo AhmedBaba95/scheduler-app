@@ -139,7 +139,42 @@ function scheduleClasses(numberOfClasses) {
 
     // Check if there are enough days to schedule the requested classes
     if (numberOfClasses > daysInCurrentWeek) {
-        console.log('Not enough days left in the current week for the specified number of classes.');        
+        console.log('Not enough days left in the current week for the specified number of classes.');
+        
+        // Initialize the current date, starting from the next Monday
+        let currentDate = moment().startOf('week').add(7, 'days');
+
+        // Indicate that classes are being scheduled
+        console.log(`Class Schedule for the next four weeks:`);
+
+        for (let week = 1; week <= 4; week++) {
+            console.log(`Week ${week}:`);
+        
+            // Initialize a counter for classes scheduled in the current week
+            let classesScheduledThisWeek = 0;
+
+            // Enter a loop to schedule classes for the current week
+            while (classesScheduledThisWeek < numberOfClasses) {
+                // Check if the current day is a weekday (Monday to Friday)
+                if (currentDate.day() >= 1 && currentDate.day() <= 5) {
+                    // Increment the scheduled class count for the current week
+                    classesScheduledThisWeek++;
+
+                    // Increment the total scheduled class count
+                    scheduledClasses++;
+
+                    // Print the class number, the formatted date, and the day of the week
+                    console.log(`Class ${scheduledClasses}: ${currentDate.format('DD-MM-YYYY')}   (${currentDate.format('dddd')})`);
+                }
+
+                // Move the date to the next day for scheduling the next class
+                currentDate.add(1, 'day');
+            }
+
+            // Move to the next Monday for the next week
+            currentDate = currentDate.add(3, 'days');
+        }
+        
     } else {
         // If there are enough days, indicate that classes are being scheduled
         console.log(`Class Schedule for the next four weeks:`);
