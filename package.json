@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/AhmedBaba95/mr-states/issues"
   },
-  "homepage": "https://github.com/AhmedBaba95/mr-states#readme"
+  "homepage": "https://github.com/AhmedBaba95/mr-states#readme",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
 }
