@@ -1,0 +1,20 @@
+{
+  "name": "scheduler-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "classes-scheduler.js",
+  "scripts": {
+    "start": "node classes-scheduler.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedBaba95/scheduler-app.git"
+  },
+  "author": "Baba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AhmedBaba95/mr-states/issues"
+  },
+  "homepage": "https://github.com/AhmedBaba95/mr-states#readme"
+}
