@@ -42,42 +42,48 @@ function getUserInput() {
     });
 }
 
-let scheduledClasses = 0; // Initialize the class count
-
 function scheduleClasses(numberOfClasses) {
-    // Initialize the current date, starting from the next Monday
-    let currentDate = moment().startOf('week').add(7, 'days');
+    const currentDate = moment().add(1, 'day'); // Start from the day after execution
+    const weeksToSchedule = 4;
 
-    // Indicate that classes are being scheduled
-    console.log(`Class Schedule for the next four weeks:`);
+    // Generate random days and sort them before the loop
+    const randomDays = generateRandomDays(numberOfClasses); // Generate random days for the week
+    const sortedDays = sortArray([...randomDays]); // Sort the days for the week
 
-    for (let week = 1; week <= 4; week++) {
+    for (let week = 1; week <= weeksToSchedule; week++) {
         console.log(`Week ${week}:`);
-        
-        // Initialize a counter for classes scheduled in the current week
-        let classesScheduledThisWeek = 0;
 
-        // Enter a loop to schedule classes for the current week
-        while (classesScheduledThisWeek < numberOfClasses) {
-            // Check if the current day is a weekday (Monday to Friday)
-            if (currentDate.day() >= 1 && currentDate.day() <= 5) {
-                // Increment the scheduled class count for the current week
-                classesScheduledThisWeek++;
-
-                // Increment the total scheduled class count
-                scheduledClasses++;
-
-                // Print the class number, the formatted date, and the day of the week
-                console.log(`Class ${scheduledClasses}: ${currentDate.format('DD-MM-YYYY')}   (${currentDate.format('dddd')})`);
-            }
-
-            // Move the date to the next day for scheduling the next class
-            currentDate.add(1, 'day');
+        for (let i = 0; i < numberOfClasses; i++) {
+            const classDate = currentDate.clone().day(sortedDays[i]);
+            console.log(`Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}`);
         }
 
-        // Move to the next Monday for the next week
-        currentDate = currentDate.add(3, 'days');
+        currentDate.add(1, 'week'); // Move to the next week
     }
+}
+
+function generateRandomDays(numberOfDays) {
+    const randomDays = [];
+    const daysInWeek = [0, 1, 2, 3, 4, 5, 6]; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+    for (let i = 0; i < numberOfDays; i++) {
+        // Generate a random index within the remaining available days
+        const randomIndex = Math.floor(Math.random() * daysInWeek.length);
+
+        // Add the selected day to randomDays
+        randomDays.push(daysInWeek[randomIndex]);
+
+        // Remove the selected day from daysInWeek
+        daysInWeek.splice(randomIndex, 1);
+    }
+
+    return randomDays;
+}
+
+
+function sortArray(array) {
+    array.sort((a, b) => a - b); // Sort the array in ascending order
+    return array;
 }
 
 getUserInput();
