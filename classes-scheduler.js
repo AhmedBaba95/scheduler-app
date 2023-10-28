@@ -46,20 +46,26 @@ function scheduleClasses(numberOfClasses) {
     const currentDate = moment().add(1, 'day'); // Start from the day after execution
     const weeksToSchedule = 4;
 
+
     // Generate random days and sort them before the loop
     const randomDays = generateRandomDays(numberOfClasses); // Generate random days for the week
     const sortedDays = sortArray([...randomDays]); // Sort the days for the week
 
+    // Schedule classes for multiple weeks
     for (let week = 1; week <= weeksToSchedule; week++) {
-        console.log(`Week ${week}:`);
+    console.log(`Week ${week}:`);
 
+        // Schedule classes for the current week
         for (let i = 0; i < numberOfClasses; i++) {
-            const classDate = currentDate.clone().day(sortedDays[i]);
+            // Calculate and display the class date
+            const classDate = currentDate.day(sortedDays[i]);
             console.log(`Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}`);
         }
 
-        currentDate.add(1, 'week'); // Move to the next week
+        // Move to the next week for scheduling
+        currentDate.add(1, 'week');
     }
+
 }
 
 function generateRandomDays(numberOfDays) {
@@ -85,5 +91,5 @@ function sortArray(array) {
     array.sort((a, b) => a - b); // Sort the array in ascending order
     return array;
 }
-
+console.log(moment().day(0))
 getUserInput();
