@@ -1,6 +1,7 @@
 // Import the required libraries
 const readline = require('readline');
 const moment = require('moment');
+const fs = require('fs');
 
 // Create a readline interface for user input
 const rl = readline.createInterface({
@@ -46,28 +47,38 @@ function scheduleClasses(numberOfClasses) {
     const currentDate = moment().add(1, 'day'); // Start from the day npms
     const weeksToSchedule = 4;
 
-
     // Generate random days and sort them before the loop
     const randomDays = generateRandomDays(numberOfClasses); // Generate random days for the week
     const sortedDays = sortArray([...randomDays]); // Sort the days for the week
-    // Schedule classes for multiple weeks
+
+    // Generate HTML content
+    let htmlContent = '<html><head><title>Class schedule</title></head><body>';
+
     for (let week = 1; week <= weeksToSchedule; week++) {
-    console.log(`Week ${week}:`);
-
-        // Schedule classes for the current week
+        htmlContent += `<h2>Week ${week}:</h2><ul>`;
+        console.log(`Week ${week}`)
         for (let i = 0; i < numberOfClasses; i++) {
-
             const classDate = currentDate.clone().add(sortedDays[i], 'day');
-            console.log(`Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}`);
-   
+            htmlContent += `<li>Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}</li>`;
+            console.log(`Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}`)
         }
-
-        currentDate.add(1, 'week')
+        htmlContent += '</ul>';
+        currentDate.add(1, 'week');
     }
 
+    htmlContent += '</body></html>';
+
+    // Write the HTML content to a file in the "app" directory with the name "scheduler.html"
+    const filePath = 'app/scheduler.html';
+    
+    fs.writeFile(filePath, htmlContent, (err) => {
+        if (err) {
+            console.error('Error writing HTML file:', err);
+        } else {
+            console.log('HTML file has been generated in the "app" directory: scheduler.html');
+        }
+    });
 }
-
-
 
 function generateRandomDays(numberOfDays) {
     const randomDays = [];
@@ -87,9 +98,9 @@ function generateRandomDays(numberOfDays) {
     return randomDays;
 }
 
-
 function sortArray(array) {
-    array.sort((a, b) => a - b); // Sort the array indecies in ascending order
+    array.sort((a, b) => a - b); // Sort the array indices in ascending order
     return array;
 }
+
 getUserInput();
