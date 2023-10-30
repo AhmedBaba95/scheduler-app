@@ -44,29 +44,42 @@ function getUserInput() {
 }
 
 function scheduleClasses(numberOfClasses) {
-    const currentDate = moment().add(1, 'day'); // Start from the day npms
+    // Set the initial date to start scheduling from the next day
+    const currentDate = moment().add(1, 'day');
+    
+    // Define the number of weeks to schedule (in this case, 4 weeks)
     const weeksToSchedule = 4;
 
     // Generate random days and sort them before the loop
     const randomDays = generateRandomDays(numberOfClasses); // Generate random days for the week
     const sortedDays = sortArray([...randomDays]); // Sort the days for the week
 
-    // Generate HTML content
-    let htmlContent = '<html><head><title>Class schedule</title></head><body>';
+    // Initialize the HTML content
+    let htmlContent = '<html>\n<head>\n<title>Class schedule</title>\n</head>\n<body>\n';
 
+    // Iterate through the weeks to schedule classes
     for (let week = 1; week <= weeksToSchedule; week++) {
-        htmlContent += `<h2>Week ${week}:</h2><ul>`;
-        console.log(`Week ${week}`)
+        htmlContent += `<h2>Week ${week}:</h2>\n<ul>\n`;
+        console.log(`Week ${week}`);
+
+        // Schedule classes for the current week
         for (let i = 0; i < numberOfClasses; i++) {
+            // Calculate the date for each class
             const classDate = currentDate.clone().add(sortedDays[i], 'day');
-            htmlContent += `<li>Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}</li>`;
-            console.log(`Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}`)
+
+            // Add class information to the HTML content and log it
+            htmlContent += `<li>Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}</li>\n`;
+            console.log(`Class ${i + 1}: ${classDate.format('DD-MM-yyyy (dddd)')}`);
         }
-        htmlContent += '</ul>';
+
+        htmlContent += '</ul>\n';
+        
+        // Move to the next week
         currentDate.add(1, 'week');
     }
 
-    htmlContent += '</body></html>';
+    // Complete the HTML content
+    htmlContent += '</body>\n</html>';
 
     // Write the HTML content to a file in the "app" directory with the name "scheduler.html"
     const filePath = 'app/scheduler.html';
@@ -75,10 +88,11 @@ function scheduleClasses(numberOfClasses) {
         if (err) {
             console.error('Error writing HTML file:', err);
         } else {
-            console.log('HTML file has been generated in the "app" directory: scheduler.html');
+            console.log('HTML file has been generated: scheduler.html');
         }
     });
 }
+
 
 function generateRandomDays(numberOfDays) {
     const randomDays = [];
